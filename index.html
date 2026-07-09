@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Srinivasan Realestate | Land & House Requirement Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="main-header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="#home">
+                    <span class="gold-text">SRINIVASAN</span> REALESTATE
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#portal">Submit Requirements</a>
+                <a href="#services">Our Services</a>
+                <button id="admin-toggle-btn" class="btn btn-outline-gold"><i class="fa-solid fa-lock"></i> Owner Portal</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <span class="hero-badge">Exquisite Properties & Land Sourcing</span>
+            <h1>Find Your Perfect <br><span class="gold-text-italic">Land & House</span></h1>
+            <p class="hero-subtext">Tell us your exact requirements, and we will source, inspect, and deliver the perfect property for you. No compromises, just premium matches.</p>
+            <div class="hero-actions">
+                <a href="#portal" class="btn btn-gold btn-lg">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#services" class="btn btn-outline btn-lg">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requirement Portal Section -->
+    <section id="portal" class="portal-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="subtitle">Requirement Builder</span>
+                <h2>Tell Us What You Want</h2>
+                <div class="divider"></div>
+                <p>Fill out our interactive form in less than 2 minutes. We will review your details and contact you with matched listings.</p>
+            </div>
+
+            <!-- Multi-step Form Container -->
+            <div class="form-card-container">
+                <!-- Step progress bar -->
+                <div class="step-progress-bar">
+                    <div class="progress-line" id="progress-line"></div>
+                    <div class="step-node active" data-step="1">
+                        <div class="node-circle">1</div>
+                        <span class="node-label">Property Type</span>
+                    </div>
+                    <div class="step-node" data-step="2">
+                        <div class="node-circle">2</div>
+                        <span class="node-label">Specifications</span>
+                    </div>
+                    <div class="step-node" data-step="3">
+                        <div class="node-circle">3</div>
+                        <span class="node-label">Budget & Time</span>
+                    </div>
+                    <div class="step-node" data-step="4">
+                        <div class="node-circle">4</div>
+                        <span class="node-label">Contact Info</span>
+                    </div>
+                </div>
+
+                <!-- Form Element -->
+                <form id="requirement-form" novalidate>
+                    
+                    <!-- STEP 1: Property Type -->
+                    <div class="form-step active" id="step-1">
+                        <h3 class="step-title">What type of property are you looking for?</h3>
+                        <p class="step-desc">Select the option that best fits your current goal.</p>
+                        
+                        <div class="property-options-grid">
+                            <!-- Option 1: Land -->
+                            <label class="property-option-card">
+                                <input type="radio" name="propertyType" value="Land" required>
+                                <div class="card-inner">
+                                    <div class="icon-wrapper">
+                                        <i class="fa-solid fa-mountain-sun"></i>
+                                    </div>
+                                    <h4>Vacant Land / Plot</h4>
+                                    <p>Perfect for custom construction, agricultural use, or long-term investment.</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 2: House -->
+                            <label class="property-option-card">
+                                <input type="radio" name="propertyType" value="House">
+                                <div class="card-inner">
+                                    <div class="icon-wrapper">
+                                        <i class="fa-solid fa-house-chimney"></i>
+                                    </div>
+                                    <h4>Built House / Villa</h4>
+                                    <p>Move-in ready or semi-furnished residential houses, villas, or apartments.</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 3: Both -->
+                            <label class="property-option-card">
+                                <input type="radio" name="propertyType" value="Both">
+                                <div class="card-inner">
+                                    <div class="icon-wrapper">
+                                        <i class="fa-solid fa-trowel-bricks"></i>
+                                    </div>
+                                    <h4>Land + Construction</h4>
+                                    <p>Acquire a plot and design-build a customized home from scratch with us.</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Specifications (Dynamic based on Step 1) -->
+                    <div class="form-step" id="step-2">
+                        <!-- Content injected/toggled via JS -->
+                        
+                        <!-- Land Specifications -->
+                        <div id="spec-land-fields" class="spec-group hidden">
+                            <h3 class="step-title">Land Specifications</h3>
+                            <p class="step-desc">Help us narrow down the perfect plot of land.</p>
+                            
+                            <div class="form-grid">
+                                <div class="form-field">
+                                    <label for="land-size">Preferred Size</label>
+                                    <div class="input-with-select">
+                                        <input type="number" id="land-size" name="landSize" placeholder="e.g., 2400" min="1">
+                                        <select name="landSizeUnit" id="land-size-unit">
+                                            <option value="Sq.Ft.">Sq.Ft.</option>
+                                            <option value="Cents">Cents</option>
+                                            <option value="Acres">Acres</option>
+                                            <option value="Grounds">Grounds</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="land-zoning">Zoning / Purpose</label>
+                                    <select name="landZoning" id="land-zoning">
+                                        <option value="" disabled selected>Select zoning type</option>
+                                        <option value="Residential">Residential (Build a house)</option>
+                                        <option value="Commercial">Commercial (Business/Shop)</option>
+                                        <option value="Agricultural">Agricultural (Farming)</option>
+                                        <option value="Investment">Pure Investment</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-field full-width">
+                                    <label>Preferred Land Location Type</label>
+                                    <div class="checkbox-buttons-grid">
+                                        <label class="check-btn">
+                                            <input type="checkbox" name="landLocationPref" value="City Center">
+                                            <span><i class="fa-solid fa-city"></i> City Center</span>
+                                        </label>
+                                        <label class="check-btn">
+                                            <input type="checkbox" name="landLocationPref" value="Suburban">
+                                            <span><i class="fa-solid fa-tree-city"></i> Suburban / Calm</span>
+                                        </label>
+                                        <label class="check-btn">
+                                            <input type="checkbox" name="landLocationPref" value="Highway Access">
+                                            <span><i class="fa-solid fa-road"></i> Near Highway</span>
+                                        </label>
+                                        <label class="check-btn">
+                                            <input type="checkbox" name="landLocationPref" value="Scenic View">
+                                            <span><i class="fa-solid fa-images"></i> Scenic / Nature</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- House Specifications -->
+                        <div id="spec-house-fields" class="spec-group hidden">
+                            <h3 class="step-title">House & Villa Specifications</h3>
+                            <p class="step-desc">Specify what you want in your home layout.</p>
+                            
+                            <div class="form-grid">
+                                <div class="form-field">
+                                    <label>Bedrooms (BHK)</label>
+                                    <div class="radio-selector-group">
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="houseBhk" value="1">
+                                            <span>1 BHK</span>
+                                        </label>
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="houseBhk" value="2">
+                                            <span>2 BHK</span>
+                                        </label>
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="houseBhk" value="3" checked>
+                                            <span>3 BHK</span>
+                                        </label>
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="houseBhk" value="4+">
+                                            <span>4+ BHK</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="house-type">House Type Style</label>
+                                    <select name="houseStyle" id="house-type">
+                                        <option value="" disabled selected>Select style</option>
+                                        <option value="Modern Villa">Modern Luxury Villa</option>
+                                        <option value="Independent House">Classic Independent House</option>
+                                        <option value="Gated Community">Gated Community House</option>
+                                        <option value="Apartment / Flat">Apartment / Flat</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="house-floors">Floors Preferred</label>
+                                    <select name="houseFloors" id="house-floors">
+                                        <option value="Single Story">Single Story (Ground Only)</option>
+                                        <option value="Duplex">Duplex (G+1 Floor)</option>
+                                        <option value="Triplex">Triplex (G+2 Floors)</option>
+                                        <option value="Any">No Preference</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="house-furnishing">Furnishing Status</label>
+                                    <select name="houseFurnishing" id="house-furnishing">
+                                        <option value="Unfurnished">Unfurnished</option>
+                                        <option value="Semi-Furnished" selected>Semi-Furnished</option>
+                                        <option value="Fully Furnished">Fully Furnished</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Combined Land + Construction Specifications -->
+                        <div id="spec-both-fields" class="spec-group hidden">
+                            <h3 class="step-title">Land & Construction Specifications</h3>
+                            <p class="step-desc">Details about both the land purchase and the building plan.</p>
+                            
+                            <div class="form-grid">
+                                <div class="form-field">
+                                    <label for="both-land-size">Plot Size Required</label>
+                                    <div class="input-with-select">
+                                        <input type="number" id="both-land-size" name="bothLandSize" placeholder="e.g., 30" min="1">
+                                        <select name="bothLandSizeUnit" id="both-land-size-unit">
+                                            <option value="Cents">Cents</option>
+                                            <option value="Sq.Ft.">Sq.Ft.</option>
+                                            <option value="Grounds">Grounds</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="both-house-size">Desired House Built-up Area</label>
+                                    <div class="input-with-unit">
+                                        <input type="number" id="both-house-size" name="bothHouseSize" placeholder="e.g., 2000" min="1">
+                                        <span class="unit-tag">Sq.Ft.</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <label>House Layout (BHK)</label>
+                                    <div class="radio-selector-group">
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="bothHouseBhk" value="2">
+                                            <span>2 BHK</span>
+                                        </label>
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="bothHouseBhk" value="3" checked>
+                                            <span>3 BHK</span>
+                                        </label>
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="bothHouseBhk" value="4">
+                                            <span>4 BHK</span>
+                                        </label>
+                                        <label class="radio-selector-btn">
+                                            <input type="radio" name="bothHouseBhk" value="5+">
+                                            <span>5+ BHK</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="both-locality">Preferred Locality / Area</label>
+                                    <input type="text" id="both-locality" name="bothLocality" placeholder="e.g., Green Valley, Westside">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Budget & Timeline -->
+                    <div class="form-step" id="step-3">
+                        <h3 class="step-title">Budget range & Timeline</h3>
+                        <p class="step-desc">Help us find properties that align with your financial plans.</p>
+                        
+                        <div class="budget-timeline-container">
+                            <!-- Budget slider and inputs -->
+                            <div class="budget-section">
+                                <label for="budget-slider" class="field-heading">Approximate Maximum Budget</label>
+                                <div class="budget-display">
+                                    <span class="currency-symbol">$</span>
+                                    <span id="budget-value">500,000</span>
+                                </div>
+                                <div class="slider-wrapper">
+                                    <input type="range" id="budget-slider" name="maxBudgetSlider" min="20000" max="2000000" step="10000" value="500000">
+                                    <div class="slider-labels">
+                                        <span>$20K</span>
+                                        <span>$500K</span>
+                                        <span>$1M</span>
+                                        <span>$1.5M</span>
+                                        <span>$2M+</span>
+                                    </div>
+                                </div>
+                                <div class="manual-budget-input">
+                                    <label for="manual-budget">Or enter custom amount ($):</label>
+                                    <input type="number" id="manual-budget" name="maxBudgetManual" placeholder="Enter amount">
+                                </div>
+                            </div>
+
+                            <hr class="form-divider">
+
+                            <!-- Timeline selection -->
+                            <div class="timeline-section">
+                                <label class="field-heading">When are you planning to buy / construct?</label>
+                                <div class="timeline-cards">
+                                    <label class="timeline-option">
+                                        <input type="radio" name="timeline" value="Immediate" checked>
+                                        <div class="timeline-card-inner">
+                                            <i class="fa-solid fa-bolt"></i>
+                                            <span>Immediate (Within 1 Month)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="timeline-option">
+                                        <input type="radio" name="timeline" value="3-6 Months">
+                                        <div class="timeline-card-inner">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            <span>3 to 6 Months</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="timeline-option">
+                                        <input type="radio" name="timeline" value="6+ Months">
+                                        <div class="timeline-card-inner">
+                                            <i class="fa-solid fa-hourglass-half"></i>
+                                            <span>6+ Months / Planning</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Contact Information -->
+                    <div class="form-step" id="step-4">
+                        <h3 class="step-title">Your Contact Information</h3>
+                        <p class="step-desc">How can our team reach out to you with matches?</p>
+                        
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="client-name">Full Name <span class="required">*</span></label>
+                                <div class="input-wrapper-icon">
+                                    <i class="fa-regular fa-user"></i>
+                                    <input type="text" id="client-name" name="clientName" placeholder="John Doe" required>
+                                </div>
+                                <span class="error-msg" id="name-error">Please enter your name</span>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="client-phone">Phone Number <span class="required">*</span></label>
+                                <div class="input-wrapper-icon">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <input type="tel" id="client-phone" name="clientPhone" placeholder="+1 (555) 123-4567" required>
+                                </div>
+                                <span class="error-msg" id="phone-error">Please enter a valid phone number</span>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="client-email">Email Address</label>
+                                <div class="input-wrapper-icon">
+                                    <i class="fa-regular fa-envelope"></i>
+                                    <input type="email" id="client-email" name="clientEmail" placeholder="john@example.com">
+                                </div>
+                                <span class="error-msg" id="email-error">Please enter a valid email</span>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="pref-contact">Preferred Contact Mode</label>
+                                <select name="prefContact" id="pref-contact">
+                                    <option value="Phone Call">Direct Phone Call</option>
+                                    <option value="WhatsApp" selected>WhatsApp Message</option>
+                                    <option value="Email">Email Response</option>
+                                </select>
+                            </div>
+
+                            <div class="form-field full-width">
+                                <label for="additional-notes">Additional Details or Specific Requirements</label>
+                                <textarea id="additional-notes" name="additionalNotes" rows="4" placeholder="Describe specific locations, features, or design styles you prefer... (e.g. Near high school, south-facing plot, duplex with garden)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Navigation Buttons -->
+                    <div class="form-navigation-actions">
+                        <button type="button" id="prev-btn" class="btn btn-outline btn-lg hidden"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+                        <button type="button" id="next-btn" class="btn btn-gold btn-lg">Next Step <i class="fa-solid fa-chevron-right"></i></button>
+                        <button type="submit" id="submit-btn" class="btn btn-gold btn-lg hidden"><i class="fa-solid fa-paper-plane"></i> Submit Requirements</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Value Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="subtitle">Why Choose Us</span>
+                <h2>End-to-End Real Estate Services</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <h3>Premium Land Sourcing</h3>
+                    <p>We source prime residential, commercial, and agricultural land with clear titles and excellent growth potential.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                    <h3>Architectural & Construction</h3>
+                    <p>From architectural blueprints to high-quality construction, we build your dream home with structural perfection.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-file-shield"></i></div>
+                    <h3>Legal Document Verification</h3>
+                    <p>Total peace of mind. We verify all title deeds, layout approvals, zoning regulations, and legal paperwork for you.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-handshake"></i></div>
+                    <h3>Hassle-Free Handover</h3>
+                    <p>We handle registrations, utility connections, and layout approvals so you can simply walk in and enjoy your space.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Leads Dashboard Section (Hidden by default, shown when Admin toggled) -->
+    <section id="admin-section" class="admin-section hidden">
+        <div class="container">
+            <div class="admin-dashboard-card">
+                <div class="admin-header">
+                    <div class="admin-title-area">
+                        <h2><i class="fa-solid fa-chart-line"></i> Leads Management Dashboard</h2>
+                        <p>Track client requirements and manage follow-ups. All data is saved securely on this device.</p>
+                    </div>
+                    <div class="admin-header-actions">
+                        <button id="export-leads-btn" class="btn btn-outline-gold btn-sm"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                        <button id="close-admin-btn" class="btn btn-outline btn-sm"><i class="fa-solid fa-xmark"></i> Close Dashboard</button>
+                    </div>
+                </div>
+
+                <!-- Admin Metrics -->
+                <div class="admin-metrics-grid">
+                    <div class="metric-card">
+                        <span class="metric-label">Total Submissions</span>
+                        <span class="metric-value" id="metric-total">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">New Leads</span>
+                        <span class="metric-value text-gold" id="metric-new">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Contacted</span>
+                        <span class="metric-value text-green" id="metric-contacted">0</span>
+                    </div>
+                </div>
+
+                <!-- Search & Filters -->
+                <div class="admin-filters-bar">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="lead-search" placeholder="Search by name, phone, or location...">
+                    </div>
+                    <div class="filter-dropdowns">
+                        <select id="filter-type">
+                            <option value="All">All Property Types</option>
+                            <option value="Land">Land Only</option>
+                            <option value="House">House Only</option>
+                            <option value="Both">Land + Construction</option>
+                        </select>
+                        <select id="filter-status">
+                            <option value="All">All Statuses</option>
+                            <option value="New">New Leads</option>
+                            <option value="Contacted">Contacted</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Leads Table / Grid -->
+                <div class="leads-table-container">
+                    <table class="leads-table" id="leads-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Client Details</th>
+                                <th>Property Type</th>
+                                <th>Specific Requirements</th>
+                                <th>Budget & Time</th>
+                                <th>Status</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-list">
+                            <!-- Injected dynamically via JS -->
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    <i class="fa-regular fa-folder-open"></i>
+                                    <p>No requirement submissions found yet.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Pin Verification Modal -->
+    <div class="modal-overlay hidden" id="pin-modal">
+        <div class="modal-card">
+            <div class="modal-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3>Owner Authentication</h3>
+            <p>Please enter the security PIN to access the leads dashboard.</p>
+            <form id="pin-form">
+                <div class="pin-input-group">
+                    <input type="password" id="admin-pin" maxlength="6" placeholder="••••" required autofocus autocomplete="off">
+                </div>
+                <span class="error-msg text-center" id="pin-error">Incorrect PIN. Try again.</span>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="pin-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-gold">Verify Pin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay hidden" id="success-modal">
+        <div class="modal-card success-card">
+            <div class="success-checkmark">
+                <div class="check-icon">
+                    <span class="icon-line line-tip"></span>
+                    <span class="icon-line line-long"></span>
+                    <div class="icon-circle"></div>
+                    <div class="icon-fix"></div>
+                </div>
+            </div>
+            <h3>Requirements Received!</h3>
+            <p>Thank you <strong id="success-client-name">Client</strong>. Your requirements have been registered successfully. Our team will contact you shortly via <strong id="success-contact-pref">WhatsApp</strong>.</p>
+            <button class="btn btn-gold" id="success-close-btn">Done</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-info">
+                <h3><span class="gold-text">SRINIVASAN</span> REALESTATE</h3>
+                <p>Personalized property sourcing and premium residential construction consulting.</p>
+                <div class="footer-socials">
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#"><i class="fa-solid fa-phone"></i></a>
+                    <a href="#"><i class="fa-regular fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <a href="#home">Home</a>
+                <a href="#portal">Submit Requirements</a>
+                <a href="#services">Services</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Business Office</h4>
+                <p><i class="fa-solid fa-location-dot"></i> HOSUR,BANGALORE</p>
+                <p><i class="fa-solid fa-phone"></i> 7550376143</p>
+                <p><i class="fa-regular fa-envelope"></i> vigneshsrinivasan077@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Srinivasan Realestate. All Rights Reserved. Powered by Local Storage Lead Management.</p>
+        </div>
+    </footer>
+
+    <!-- Custom Script -->
+    <script src="app.js"></script>
+</body>
+</html>
